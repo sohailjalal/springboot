@@ -54,14 +54,14 @@ pipeline {
        
     stage('login k8s'){
         steps{
-            sh"aws eks --region us-east-1 update-kubeconfig --name test-cluster"
+            sh"aws eks --region us-east-1 update-kubeconfig --name EKS_CLUSTER"
         }
     }
        
     stage('deployment') {
      steps{  
          script {
-            sh"aws --region us-east-1 eks get-token --cluster-name test-cluster"
+            sh"aws --region us-east-1 eks get-token --cluster-name EKS_CLUSTER"
             sh"kubectl apply -f eks_cicd/deployment.yaml"
             sh"kubectl rollout restart -f  eks_cicd/deployment.yaml "
             
